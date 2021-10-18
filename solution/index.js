@@ -1,4 +1,3 @@
-// solution/index.js
 module.exports = function (Homework) {
 
     function getElementProm(asyncArray, elemNum) {
@@ -8,6 +7,7 @@ module.exports = function (Homework) {
             });
         });
     }
+
     function getSizeProm(asyncArray) {
         return new Promise(function (resolve, reject) {
             asyncArray.length( (res) => {
@@ -15,6 +15,7 @@ module.exports = function (Homework) {
             });
         });
     }
+
     function getIsBiggerProm(num1, num2) {
         return new Promise(function (resolve, reject) {
             less( num1, num2,(res) => {
@@ -33,7 +34,7 @@ module.exports = function (Homework) {
 
     return (array, fn, initialValue, cb) => {
 
-        let i = 0;
+    let i = 0;
     let res = 0;
     
     if (initialValue){
@@ -41,14 +42,14 @@ module.exports = function (Homework) {
     }
     else {
         console.log('zero is false');
-        res = await getElementProm(asyncArray, 0);
+        res = await getElementProm(array, 0);
         i = 1;
     }
-    let size = await getSizeProm(asyncArray);
+    let size = await getSizeProm(array);
     let flag = await getIsBiggerProm(i, size);
     
     while(flag){
-        let elem1 = await getElementProm(asyncArray, i);
+        let elem1 = await getElementProm(array, i);
         let diff = new Promise(function (resolve, reject) {
         fn(elem1,res,null, null, (res1) => {
                 resolve(res1)
