@@ -1,4 +1,4 @@
-module.exports = async function (Homework) {
+module.exports =  function (Homework) {
 
     function getElementProm(asyncArray, elemNum) {
         return new Promise(function (resolve, reject) {
@@ -18,7 +18,7 @@ module.exports = async function (Homework) {
 
     function getIsBiggerProm(num1, num2) {
         return new Promise(function (resolve, reject) {
-            less( num1, num2,(res) => {
+            Homework.less( num1, num2,(res) => {
                 resolve(res)
             });
         });
@@ -26,13 +26,13 @@ module.exports = async function (Homework) {
     
     function getIterProm(num1) {
         return new Promise(function (resolve, reject) {
-            add( num1, 1,(res) => {
+            Homework.add( num1, 1,(res) => {
                 resolve(res)
             });
         });
     }
 
-    return (array, fn, initialValue, cb) => {
+    return async (array, fn, initialValue, cb) => {
 
     let i = 0;
     let res = 0;
@@ -41,7 +41,6 @@ module.exports = async function (Homework) {
         res = initialValue;
     }
     else {
-        console.log('zero is false');
         res = await getElementProm(array, 0);
         i = 1;
     }
