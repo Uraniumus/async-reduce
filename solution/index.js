@@ -1,4 +1,4 @@
-module.exports = function (Homework) {
+module.exports = async function (Homework) {
 
     function getElementProm(asyncArray, elemNum) {
         return new Promise(function (resolve, reject) {
