@@ -47,46 +47,46 @@
 
 const { AsyncArray, add, subtract, multiply, divide, less, equal, lessOrEqual } = Homework;
 
-const a = new AsyncArray([1, 2, 3]);
+// const a = new AsyncArray([1, 2, 3]);
 
-a.push(4, () => {
-    console.log('добавление элемента выполнено');
-    a.print();
+// a.push(4, () => {
+//     console.log('добавление элемента выполнено');
+//     a.print();
 
-    a.set(2, 999, () => {
-        console.log('присваивание элемента по индексу выполнено');
-        a.print();
+//     a.set(2, 999, () => {
+//         console.log('присваивание элемента по индексу выполнено');
+//         a.print();
 
-        a.get(0, (result) => {
-            console.log('получение элемента по индексу выполнено, результат', result);
-            a.print();
+//         a.get(0, (result) => {
+//             console.log('получение элемента по индексу выполнено, результат', result);
+//             a.print();
 
-            a.pop((result) => {
-                console.log('получение последнего элемента выполнено, результат', result);
-                a.print();
+//             a.pop((result) => {
+//                 console.log('получение последнего элемента выполнено, результат', result);
+//                 a.print();
 
-                a.length((result) => {
-                    console.log('получение длины массива выполнено, результат', result);
-                    a.print();
-                });
-            });
-        });
-    });
-});
+//                 a.length((result) => {
+//                     console.log('получение длины массива выполнено, результат', result);
+//                     a.print();
+//                 });
+//             });
+//         });
+//     });
+// });
 
-add(5, 2, (result) => console.log('результат сложения', result));
+// add(5, 2, (result) => console.log('результат сложения', result));
 
-subtract(11, 7, (result) => console.log('результат вычитания', result));
+// subtract(11, 7, (result) => console.log('результат вычитания', result));
 
-multiply(6, 7, (result) => console.log('результат умножения', result));
+// multiply(6, 7, (result) => console.log('результат умножения', result));
 
-divide(13, 7, (result) => console.log('результат деления', result));
+// divide(13, 7, (result) => console.log('результат деления', result));
 
-less(5, 3, (result) => console.log('результат операции МЕНЬШЕ', result));
+// less(5, 3, (result) => console.log('результат операции МЕНЬШЕ', result));
 
-equal(1, 1, (result) => console.log('результат операции РАВНО', result));
+// equal(1, 1, (result) => console.log('результат операции РАВНО', result));
 
-lessOrEqual(12, 19, (result) => console.log('результат операции МЕНЬШЕ ИЛИ РАВНО', result));
+// lessOrEqual(12, 19, (result) => console.log('результат операции МЕНЬШЕ ИЛИ РАВНО', result));
 
 const asyncArray = new Homework.AsyncArray([1, 2, 3, 4]);
 const reducerSum = (acc, curr, i, src, cb) => Homework.add(acc, curr, cb);
@@ -95,7 +95,62 @@ reduce(asyncArray, reducerSum, 0, (res) => {
     console.log(res); // 10
 });
 
-function reduce(asyncArray, fn, initialValue, cb) {
-    // добро пожаловать в Callback Hell
-    // твой побег начинается прямо сейчас...
+function getElementProm(asyncArray, elemNum) {
+    return new Promise(function (resolve, reject) {
+        asyncArray.get(elemNum, (res) => {
+            resolve(res)
+        });
+    });
+}
+function getSizeProm(asyncArray) {
+    return new Promise(function (resolve, reject) {
+        asyncArray.length( (res) => {
+            resolve(res)
+        });
+    });
+}
+function getIsBiggerProm(num1, num2) {
+    return new Promise(function (resolve, reject) {
+        less( num1, num2,(res) => {
+            resolve(res)
+        });
+    });
+}
+
+function getIterProm(num1) {
+    return new Promise(function (resolve, reject) {
+        add( num1, 1,(res) => {
+            resolve(res)
+        });
+    });
+}
+
+async function reduce(asyncArray, fn, initialValue, cb) {
+    let i = 0;
+    let res = 0;
+    
+    if (initialValue){
+        res = initialValue;
+    }
+    else {
+        console.log('zero is false');
+        res = await getElementProm(asyncArray, 0);
+        i = 1;
+    }
+    let size = await getSizeProm(asyncArray);
+    let flag = await getIsBiggerProm(i, size);
+    
+    while(flag){
+        let elem1 = await getElementProm(asyncArray, i);
+        let diff = new Promise(function (resolve, reject) {
+        fn(elem1,res,null, null, (res1) => {
+                resolve(res1)
+            });
+        }); 
+        res = await diff;
+        i = await getIterProm(i);
+        flag = await getIsBiggerProm(i, size);
+    }
+    cb(res);
+
 }
