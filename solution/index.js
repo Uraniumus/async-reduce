@@ -32,12 +32,20 @@ module.exports =  function (Homework) {
         });
     }
 
+    function getEqualProm(num1, num2) {
+        return new Promise(function (resolve, reject) {
+            Homework.equal( num1, num2,(res) => {
+                resolve(res)
+            });
+        });
+    }
+
     return async (array, fn, initialValue, cb) => {
 
     let i = 0;
     let res = 0;
-    
-    if (initialValue !== null){
+    let initFlag = await getEqualProm(initialValue, null);
+    if (!initFlag){
         res = initialValue;
     }
     else {
