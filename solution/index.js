@@ -37,7 +37,7 @@ module.exports =  function (Homework) {
     let i = 0;
     let res = 0;
     
-    if (initialValue){
+    if (initialValue !== null){
         res = initialValue;
     }
     else {

@@ -89,7 +89,7 @@ const { AsyncArray, add, subtract, multiply, divide, less, equal, lessOrEqual } 
 // lessOrEqual(12, 19, (result) => console.log('результат операции МЕНЬШЕ ИЛИ РАВНО', result));
 
 const asyncArray = new Homework.AsyncArray([1, 2, 3, 4]);
-const reducerSum = (acc, curr, i, src, cb) => Homework.add(acc, curr, cb);
+const reducerSum = (acc, curr, i, src, cb) => Homework.multiply(acc, curr, cb);
 
 const myReduce = require("./solution/index")(Homework)
 myReduce(asyncArray, reducerSum, 0, (res) => { console.log(res); // 10
