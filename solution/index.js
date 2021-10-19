@@ -50,7 +50,7 @@ module.exports =  function (Homework) {
     while(flag){
         let elem1 = await getElementProm(array, i);
         let diff = new Promise(function (resolve, reject) {
-        fn(elem1,res,null, null, (res1) => {
+        fn(elem1,res,i, array, (res1) => {
                 resolve(res1)
             });
         }); 
