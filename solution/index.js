@@ -41,7 +41,7 @@ module.exports =  function (Homework) {
     }
 
     return async (array, fn, initialValue, cb) => {
-
+        
     let i = 0;
     let res = 0;
     let initFlag = await getEqualProm(initialValue, null);
@@ -58,7 +58,7 @@ module.exports =  function (Homework) {
     while(flag){
         let elem1 = await getElementProm(array, i);
         let diff = new Promise(function (resolve, reject) {
-        fn(elem1,res,i, array, (res1) => {
+        fn(res, elem1, i, array, (res1) => {
                 resolve(res1)
             });
         }); 
